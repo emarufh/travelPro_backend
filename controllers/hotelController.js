@@ -63,7 +63,10 @@ module.exports = {
     try {
       const hotel = await Hotel.findById(hotelId).populate({
         path: "reviews",
+        options: { sort: { updatedAt: -1 }, limit: 2 },
         select: "rating review updatedAt user",
+
+        populate: { path: "user", model: "User", select: "username profile" },
       });
 
       if (!hotel) {
